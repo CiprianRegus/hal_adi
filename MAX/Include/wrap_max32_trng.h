@@ -26,6 +26,20 @@
 extern "C" {
 #endif
 
+#if defined(CONFIG_SOC_MAX32650)
+
+static inline int Wrap_MXC_TRNG_RandomInt_NonBlocking(uint32_t *data)
+{
+    if ((MXC_TRNG->ctrl & MXC_F_TRNG_CTRL_RNG_IS) == 0) {
+        return -1; /* Not ready */
+    }
+    *data = MXC_TRNG->data;
+
+    return 0;
+}
+
+#endif
+
 /*
  *  MAX32665, MAX32666 related mapping
  */
